@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+
+	<!-- 2014-12-16 LYS 몽고DB 기본 설정 -->
+	<mongo:mongo host="127.0.0.1" port="27017">
+		<mongo:options connections-per-host="4" connect-timeout="10000"
+			max-wait-time="10000" auto-connect-retry="true" socket-keep-alive="true"
+			socket-timeout="1500" write-fsync="true" />
+	</mongo:mongo>
+
+	<!-- 2014-12-16 LYS 몽고DB 템플릿 설정 -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="testdb" />
+	</bean>
+
+	<!-- 2014-12-16 LYS 몽고DB 레파지토리 설정(스캔) -->
+	<mongo:repositories base-package="com.bigdata.blog.www" />
+
+</beans>
